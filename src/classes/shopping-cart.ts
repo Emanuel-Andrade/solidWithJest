@@ -7,8 +7,8 @@ export class ShoppingCart implements ShoppingCartProtocol {
 
   constructor(private readonly discount: Discount) {}
 
-  addItem(item: CartItem): void {
-    this._items.push(item);
+  addItem([...itens]: CartItem[]): void {
+    itens.forEach((item) => this._items.push(item));
   }
 
   removeItem(index: number): void {
