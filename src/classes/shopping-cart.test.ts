@@ -1,11 +1,6 @@
-import { Discount } from './discount';
-import { ShoppingCart } from './shopping-cart';
+import { ShoppingCartMock as sut, DiscountMock } from '../Mocks/mocks';
 
 describe('ShoppingCart', () => {
-  class DiscountMock extends Discount {
-    protected readonly discount = 0.15;
-  }
-  const sut = new ShoppingCart(new DiscountMock());
   const bread = { name: 'Bread', price: 7.9 };
   const water = { name: 'Water', price: 2.75 };
 
@@ -31,6 +26,12 @@ describe('ShoppingCart', () => {
   it('should remove an item from cart', () => {
     sut.removeItem(1);
     expect(sut.items).toEqual([bread]);
+  });
+
+  it('should call Discount.calculate when totalWithDiscount is called', () => {
+    const spyDiscount = jest.spyOn(DiscountMock, 'calculate');
+    sut.totalWithDicount();
+    expect(spyDiscount).toHaveBeenCalled();
   });
 
   it('should clear de cart', () => {
